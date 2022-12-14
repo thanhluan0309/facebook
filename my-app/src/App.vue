@@ -1,14 +1,19 @@
 <template>
   <div id="app">
     <nav>
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-      <router-link to="/test">test</router-link>
+        <PostVue />
     </nav>
-    <router-view/>
   </div>
 </template>
+<script lang="ts">
+import PostVue from './views/Post.vue';
+export default{
+  components:{
+    PostVue
+  }
+}
 
+</script>
 <style lang="scss">
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
