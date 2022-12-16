@@ -1,19 +1,28 @@
 <template>
   <div id="app">
+    <header>
+      <headerVue />
+    </header>
     <nav>
         <PostVue />
     </nav>
+    
   </div>
 </template>
+
 <script lang="ts">
 import PostVue from './views/Post.vue';
+import headerVue from './views/header.vue';
 export default{
+  name: "app",
   components:{
-    PostVue
+    PostVue,
+    headerVue
   }
 }
 
 </script>
+
 <style lang="scss">
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
