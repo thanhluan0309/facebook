@@ -8,6 +8,7 @@ app.use(cors());
 const Routeruser = require("./router/user");
 const Routerpost = require("./router/post");
 const Routercomment = require("./router/comment");
+const Routerbehavior = require("./router/behavior");
 const Post = require("./model/post");
 var bodyParser = require("body-parser");
 
@@ -35,6 +36,7 @@ connectDB();
 app.use("/user", Routeruser);
 app.use('/post', Routerpost);
 app.use("/comment", Routercomment);
+app.use('/behavior',Routerbehavior);
 
 app.get("/post/all-post",(req, res)=>{
   Post.find().then((result)=>{

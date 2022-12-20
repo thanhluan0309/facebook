@@ -4,11 +4,8 @@ const Post = require("../model/post");
 const Router = express.Router();
 
 //create
-Router.post("/create", postcontroller.creatPost);
-//update
-//delete
-//get a post
-//get timeline
+Router.post("/create", postcontroller.createPost);
+Router.get("/user/:id", postcontroller.getPostByUser );
 
 
 module.exports = Router;

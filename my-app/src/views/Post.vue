@@ -1,6 +1,6 @@
 <template>
    <div id="post">
-      <div v-for="(post, index) in posts" :key="index">
+      <div id="data" v-for="(post, index) in posts" :key="index">
          <div id="user">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person"
                viewBox="0 0 16 16">
@@ -25,9 +25,9 @@
                   <b-link href="#foo">Share</b-link>
                </div>
             </div>
-         
+
          </div>
-         <div id="comment-section"></div>
+         <div id="comment-section">
             <b-input-group v-for="size in ['sm']" :key="size" :size="size" class="mb-3" prepend="Comment">
                <b-form-input></b-form-input>
                <b-input-group-append>
@@ -40,6 +40,8 @@
          </div>
          <hr />
    </div>
+   </div>
+
 </template>
 <script lang="ts">
 import Vue from "vue";
@@ -52,17 +54,6 @@ export default {
    name: "posts",
    data() {
       return {
-         // posts:[
-         //    {
-         //    user: 1 ,
-         //    post_date: '19/02/2022',
-         //    title: 'This is post title' ,
-         //    content: 'https://play-lh.googleusercontent.com/Ew7HkAyuZeKrb93Cjhay-oUm5iJFA808RcRu_9ys2zqbZHPq3yceN_kL6Wo5Yb1DcCEC' ,
-         //    like: 1,
-         //    comment:1
-         // }
-
-         // ]
          posts: undefined,
       };
    },
@@ -80,25 +71,28 @@ export default {
    align-self: center;
    width: 50%;
    align-content: center;
+   
 }
-
+#data{
+   border-style: solid;
+  border-width: medium;
+}
 #status {
    border: 1px solid black;
    display: flex;
    align-items: center;
    width: 30%;
    align-self: center;
+   margin: 5px;
 }
 
 div {
    margin: 5px;
 }
-
 #emoji,
 #comment,
 #share {
    flex: 1;
-   border: 1px solid black;
    size: inherit;
    text-align: center;
 }
