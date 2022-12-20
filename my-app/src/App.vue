@@ -1,10 +1,15 @@
 <template>
   <div id="app">
-    <header>
+    <header style="background-color: #00d4ff;">
       <headerVue />
     </header>
-    <nav>
-        <PostVue />
+    <nav  >
+      <h1>Post user liked</h1>
+        <UserLike />
+    </nav>
+    <nav  >
+      <h1>Post user create</h1>
+        <UserPost />
     </nav>
     
   </div>
@@ -13,11 +18,15 @@
 <script lang="ts">
 import PostVue from './views/Post.vue';
 import headerVue from './views/header.vue';
+import UserLike from './views/UserLiked.vue';
+import UserPost from './views/UserPost.vue';
 export default{
   name: "app",
   components:{
     PostVue,
-    headerVue
+    headerVue,
+    UserLike,
+    UserPost
   }
 }
 
@@ -28,13 +37,12 @@ export default{
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
+  // text-align: center;
   color: #2c3e50;
 }
-
 nav {
   padding: 30px;
-
+  background-color:linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(85,85,235,0.9051995798319328) 31%, rgba(81,139,201,1) 34%, rgba(124,149,236,0.6222864145658263) 35%, rgba(0,212,255,1) 100%);
   a {
     font-weight: bold;
     color: #2c3e50;
