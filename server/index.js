@@ -4,6 +4,8 @@ const app = express();
 const mongoose = require("mongoose");
 const cors = require("cors");
 const routeruser = require("./router/user");
+const routerPost = require("./router/post");
+const routerBehavior = require("./router/behavior")
 app.use(cors());
 dotenv.config();
 const ConnectDB = async (req, res) => {
@@ -28,3 +30,7 @@ app.get("/", (req, res) => {
   res.send("hello");
 });
 app.use("/user", routeruser);
+
+app.use("/post", routerPost);
+
+app.use("/behavior", routerBehavior);

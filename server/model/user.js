@@ -8,5 +8,9 @@ const userSchema = mongoose.Schema({
   password: {
     type: String,
   },
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "users",
+  },
 });
 module.exports = mongoose.model("Users", userSchema);

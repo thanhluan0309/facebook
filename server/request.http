@@ -17,3 +17,65 @@ Content-Type: application/json
     "username":"luan 123",
     "password":"123"
 }
+//
+//add post
+###
+POST http://localhost:6969/post/
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyRXhpc3QiOiI2MzhkN2VlZTBhMmRlMjE5NzEwYWZlYzkiLCJpYXQiOjE2NzA5OTI0OTl9.ifog5ln6GYN0k1AbtEMCHlWIGpI7DEct3L-bwKqe19o
+
+{
+    "title":"hom nay di net",
+    "content":["Di net","img","img"]
+}
+//get all post
+###
+GET http://localhost:6969/post/
+
+//
+//add behavior
+###
+POST http://localhost:6969/behavior/
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyRXhpc3QiOiI2MzhkN2VlZTBhMmRlMjE5NzEwYWZlYzkiLCJpYXQiOjE2NzA5OTI0OTl9.ifog5ln6GYN0k1AbtEMCHlWIGpI7DEct3L-bwKqe19o
+
+{
+    "like":"Smile"
+}
+//
+//get one behavior by post id
+###
+GET http://localhost:6969/behavior/639beef7ec3662744cd4bbb2
+
+
+//update behavior by post id
+###
+PUT http://localhost:6969/behavior/639beef7ec3662744cd4bbb2
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyRXhpc3QiOiI2MzhkN2VlZTBhMmRlMjE5NzEwYWZlYzkiLCJpYXQiOjE2NzA5OTI0OTl9.ifog5ln6GYN0k1AbtEMCHlWIGpI7DEct3L-bwKqe19o
+
+{
+    "like":[
+       {
+            "user":"639beef7ec3662744cd4bbb4",
+            "likeContent":"smil zze"
+       }, {
+            "user":"639beef7ec3662744cd4bbb4",
+            "likeContent":"sad"
+       }
+    ],
+    "comment":[
+       {
+            "user":"639beef7ec3662744cd4bbb4",
+            "CommentContent":"haha"
+       }, {
+            "user":"639beef7ec3662744cd4bbb4",
+            "CommentContent":"huhu"
+       }
+       , {
+            "user":"639beef7ec3662744cd4bbb4",
+            "CommentContent":"asdasdasd"
+       }
+    ]
+   
+}
