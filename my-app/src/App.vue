@@ -1,17 +1,11 @@
 <template>
   <div id="app">
-    <header style="background-color: #00d4ff;">
-      <headerVue />
-    </header>
-    <nav  >
-      <h1>Post user liked</h1>
-        <UserLike />
-    </nav>
-    <nav  >
-      <h1>Post user create</h1>
-        <UserPost />
-    </nav>
-    
+    <!-- <nav  >
+      <router-link to="/">Home</router-link> |
+      <router-link to="/about">About</router-link>
+      <router-link to="/test">test</router-link>
+    </nav> -->
+    <router-view />
   </div>
 </template>
 

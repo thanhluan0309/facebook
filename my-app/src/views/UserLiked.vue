@@ -24,16 +24,15 @@ export default {
    name: "like",
    data() {
       return {
-         behaviors: undefined,
-         user:'639beef7ec3662744cd4bbb4'
+         behaviors: undefined
       };
    },
    mounted() {
-      localStorage.setItem('user',JSON.stringify('639beef7ec3662744cd4bbb4'))
-      var user =JSON.parse(localStorage.getItem('user'));
-      console.log(JSON.parse(localStorage.getItem('user')));
+      // localStorage.setItem('user',JSON.stringify('639beef7ec3662744cd4bbb4'))
+      var user =JSON.parse(localStorage.getItem('userid'));
+      console.log(JSON.parse(localStorage.getItem('userid')));
       Vue.axios
-         .get("http://localhost:3001/behavior/like/"+user)
+         .get("http://localhost:6969/behavior/like/"+user)
          .then((res) => {
             this.behaviors = res.data;
             console.warn(res.data);

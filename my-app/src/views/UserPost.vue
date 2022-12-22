@@ -26,11 +26,11 @@ export default {
       };
    },
    mounted() {
-      localStorage.setItem('userpost', JSON.stringify('63998346febdad0994957719'))
-      var user = JSON.parse(localStorage.getItem('userpost'));
-      console.log(JSON.parse(localStorage.getItem('userpost')));
+      // localStorage.setItem('userpost', JSON.stringify('63998346febdad0994957719'))
+      var user = JSON.parse(localStorage.getItem('userid'));
+      console.log(JSON.parse(localStorage.getItem('userid')));
       Vue.axios
-         .get("http://localhost:3001/post/user/" + user)
+         .get("http://localhost:6969/post/user/" + user)
          .then((res) => {
             this.posts = res.data;
             console.warn(res.data);
