@@ -1,7 +1,11 @@
 
 <template>
-  <div class="home">
 
+  <div class="home">
+    <h1>UserLike</h1>
+    <UserLike />
+    <h1>UserPost</h1>
+    <UserPost />
     <img id="imgvalueset" src="compman.gif" />
     <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
       aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -268,8 +272,7 @@
         </div>
       </div>
     </div>
-    <UserLike />
-    <UserPost />
+
     <footer id="footer">
       <p>&copy; Copyright 2021 - Socialbook All Rights Reserved</p>
     </footer>
@@ -373,7 +376,7 @@ export default {
     },
 
   },
-  components:{
+  components: {
     UserLike,
     UserPost
   }

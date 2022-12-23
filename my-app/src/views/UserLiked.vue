@@ -7,7 +7,7 @@
           font-size: 20px;
           background-image: url('https://resize.indiatvnews.com/en/resize/newbucket/730_-/2022/05/facebook-freepik-1652177112.jpg');
         ">
-            <b-card-text v-for="(content, index) in item.post.content">
+            <b-card-text v-for="(content, index) in item.post.content" :key="index">
                {{ content }}
             </b-card-text>
             <a href="#" class="card-link">Go to Post</a>
@@ -29,8 +29,8 @@ export default {
    },
    mounted() {
       // localStorage.setItem('user',JSON.stringify('639beef7ec3662744cd4bbb4'))
-      var user =JSON.parse(localStorage.getItem('userid'));
-      console.log(JSON.parse(localStorage.getItem('userid')));
+      var user =localStorage.getItem('userid');
+      console.log(user);
       Vue.axios
          .get("http://localhost:6969/behavior/like/"+user)
          .then((res) => {
@@ -51,10 +51,10 @@ export default {
 
 <style>
 .container {
-   border-style: solid;
+   /* border-style: solid;
    border-color: #090979;
    box-shadow: 5px 5px #090979;
    margin: 10px;
-   margin-bottom: 20px;
+   margin-bottom: 20px; */
 }
 </style>

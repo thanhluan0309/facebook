@@ -1,5 +1,17 @@
 const post = require("../model/post");
 class PostController {
+  async getPostByUser(req, res){
+    try {
+       Post.find({
+          user: req.params.id
+       }).populate('user').then((result)=>{
+          res.send(result);
+          console.log(req.params.id);
+       });
+    } catch (error) {
+       res.status(500).json(error)
+    }
+ }
   async addPost(req, res) {
     try {
       const { title, content } = req.body;
@@ -11,19 +23,23 @@ class PostController {
         return res
           .status(500)
           .json({ success: false, message: "Nội dung không được bỏ trống !!" });
-      } else {
-        const newpost = post({
-          title: title,
-          content: content,
-          user: req.UserExit,
-        });
-        await newpost.save();
-        return res.status(200).json({
-          success: true,
-          message: "Add post success",
-          newpost: newpost,
-        });
       }
+      const newpost = Post({
+        title: title,
+        content: content,
+        user: req.UserExit,
+      });
+      await newpost.save();
+      const newBehavior = behavior({
+        post: newpost._id
+      });
+      await newBehavior.save();
+
+      return res.status(200).json({
+        success: true,
+        message: "Add post success",
+        newpost: newpost,
+      });
     } catch (error) {
       console.log(error);
     }

@@ -1,5 +1,36 @@
 const behaviors = require("../model/behavior");
 class PostController {
+   async createBehavior(req , res){
+    try{
+       const newBehavior = new behaviors(req.body);
+       const savedBehavior = await newBehavior.save();
+       res.status(200).json(savedBehavior);
+    }catch(err){
+       res.status(500).json(err);
+    }
+ }
+ async getAllBehavior(req, res){
+    try {
+      behaviors.find().then((result)=>{
+          res.send(result);
+       });
+    } catch (err) {
+       res.status(500).json(err);
+       console.log(err);
+    }
+ }
+ async getBehaviorByUser(req, res){
+    try { 
+      behaviors.find({
+          like:
+          {$elemMatch:{'user': req.params.id}}
+       }).populate('post').then((result)=>{
+          res.send(result);
+       });
+    } catch (error) {
+       res.status(500).json(error);
+    }
+ }
   async createBehavior(req, res) {
     try {
       const { like, comment, post } = req.body;
@@ -84,5 +115,6 @@ class PostController {
       console.log(error);
     }
   }
+  
 }
 module.exports = new PostController();

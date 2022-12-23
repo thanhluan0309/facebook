@@ -1,6 +1,18 @@
 const behavior = require("../model/behavior");
 const Post = require("../model/post");
 class PostController {
+ async getPostByUser(req, res){
+    try {
+       Post.find({
+          user: req.params.id
+       }).populate('user').then((result)=>{
+          res.send(result);
+          console.log(req.params.id);
+       });
+    } catch (error) {
+       res.status(500).json(error)
+    }
+ }
   async addPost(req, res) {
     try {
       const { title, content } = req.body;
