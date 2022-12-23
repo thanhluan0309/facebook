@@ -4,6 +4,8 @@ import HomeView from "../views/HomeView.vue";
 import TestView from "../views/testView.vue";
 import Registerview from "../views/register.vue"
 import LoginView from "../views/login.vue";
+import UserLike from "../views/UserLiked.vue";
+import UserPost from "../views/UserPost.vue";
 Vue.use(VueRouter);
 
 const routes = [
@@ -22,7 +24,6 @@ const routes = [
     name: "login",
     component: LoginView,
   },
-  ,
   {
     path: "/register",
     name: "register",
@@ -37,6 +38,16 @@ const routes = [
     component: () =>
       import(/* webpackChunkName: "about" */ "../views/AboutView.vue"),
   },
+  {
+    path:"/userLike",
+    name: "userlike",
+    component: UserLike
+  },
+  {
+    path:"/userPost",
+    name: "userpost",
+    component: UserPost
+  }
 ];
 
 const router = new VueRouter({

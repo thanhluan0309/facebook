@@ -1,11 +1,6 @@
 
 <template>
-
   <div class="home">
-    <h1>UserLike</h1>
-    <UserLike />
-    <h1>UserPost</h1>
-    <UserPost />
     <img id="imgvalueset" src="compman.gif" />
     <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
       aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -61,6 +56,9 @@
           </button>
           <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
             <li @click="logout()" class="dropdown-item">logout</li>
+            <li @click="userLike()" class="dropdown-item">User's Like post</li>
+            <li @click="userPost()" class="dropdown-item">Posts of User</li>
+            <router-link to="" ></router-link>
           </ul>
         </div>
       </div>
@@ -304,6 +302,12 @@ export default {
     logout() {
       localStorage.clear()
       return window.location.href = "http://localhost:8080/login";
+    },
+    userLike(){
+      return window.location.href = "http://localhost:8080/userLike";
+    },
+    userPost(){
+      return window.location.href = "http://localhost:8080/userPost";
     },
     async getallPost() {
       try {
