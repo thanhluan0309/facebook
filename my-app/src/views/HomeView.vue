@@ -195,39 +195,12 @@
           </div>
           <div class="status-field">
             <p>{{ item.title }} </p>
-            <!-- <div v-for="(img, index) in item.content"> -->
-
-            <!-- <div>../../../server/uploads/{{ img }}</div>
-              <img v-bind:src='getphoto()' class="d-block w-100" alt="...">
-              <img :src="'../../../server/uploads/' + getphoto().toString()" /> -->
-
-            <!-- 
-              <img v-bind:src='"../../../server/uploads/" + getphoto()' class="d-block w-100" alt="..."> -->
-            <!-- <div v-bind:id="img" v-if="index == 0">{{ img }} -{{ index }}</div>
-              <div v-bind:id="img" v-if="index != 0">{{ img }} -{{ index }}</div> -->
-            <!-- </div> -->
-            <div v-bind:id="'carousel' + item._id.substring(20)" class="carousel slide" data-bs-ride="carousel">
-              <div class="carousel-inner">
-                <div class="carousel-item active">
-                  <img v-bind:src='"../../../server/uploads/b3375f05d7577f11cff8df300.png"' class="d-block w-100"
-                    alt="...">
-                </div>
-                <div class="carousel-item ">
-                  <img v-bind:src='"../../../server/uploads/b3375f05d7577f11cff8df300.png"' class="d-block w-100"
-                    alt="...">
-                </div>
-              </div>
-              <button class="carousel-control-prev" type="button"
-                v-bind:data-bs-target="'#carousel' + item._id.substring(20)" data-bs-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Previous</span>
-              </button>
-              <button class="carousel-control-next" type="button"
-                v-bind:data-bs-target="'#carousel' + item._id.substring(20)" data-bs-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Next</span>
-              </button>
-            </div>
+            <carousel loop="true" :navigationEnabled="true" :per-page="1" :navigate-to="someLocalProperty"
+              :mouse-drag="false">
+              <slide v-for="(img, index) in item.content">
+                <img height="340px" v-bind:src="getImgUrl(img)" class="d-block w-100" alt="...">
+              </slide>
+            </carousel>
           </div>
           <div class="post-reaction">
             <div class="activity-icons">
@@ -322,28 +295,38 @@
 }
 </style>
 <script >
+import { Carousel, Slide } from 'vue-carousel';
 import axios from 'axios'
 export default {
   name: 'imageUpload',
   data() {
     return {
+      num0: 0,
       username: localStorage.getItem("username"),
       previewImage: null,
       Post: []
     }
   },
-
+  components: {
+    Carousel,
+    Slide
+  },
+  computed: {
+    photo() {
+      return '../../../server/uploads/b3375f05d7577f11cff8df300.png';
+    }
+  },
   mounted() {
     document.getElementById("userid").value = localStorage.getItem("userid");
+
     window.addEventListener("load", this.getallPost);
-    console.log("username", this.getallPost)
+
   },
   methods: {
-    getphoto() {
-      return "b3375f05d7577f11cff8df300.png".toString();
+    getImgUrl(pic) {
+      return require('../../../server/uploads/' + pic)
     },
     async handlecreate() {
-      console.log("form", document.getElementById('form'))
       var bodyFormData = new FormData(document.getElementById('form'));
 
       axios({
@@ -359,6 +342,7 @@ export default {
       })
         .then(function (response) {
           console.log(response);
+          this.getallPost();
         })
         .catch(function (response) {
           //handle error
