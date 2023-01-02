@@ -2,7 +2,6 @@
 <template>
   <div class="home">
 
-    <img id="imgvalueset" src="compman.gif" />
     <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
       aria-labelledby="staticBackdropLabel" aria-hidden="true">
       <div class="modal-dialog">
@@ -15,24 +14,33 @@
                 <small>Create post <i class="fas fa-caret-down"></i></small>
               </div>
             </div>
-            <div class="post-upload-textarea">
-              <textarea name="" placeholder="What's on your mind," id="contenttitle" cols="30" rows="3"></textarea>
-              <div>
-                <img id="imgvalue" style="max-height: 100px" v-bind:src="previewImage" />
-              </div>
-              <div class="add-post-links">
-                <a href="#"><img src="./images/live-video.png" alt="">Live Video</a>
-                <a href="#"><img src="./images/photo.png" alt=""> <label for="files" class="btn">Photo/img</label></a>
 
-                <a href="#"><img src="./images/feeling.png" alt="">Feeling Activity</a>
+            <form enctype="multipart/form-data" id="form">
+              <div class="post-upload-textarea">
+                <input id="title" type="text" name="title" />
+                <input id="userid" name="userid" type="hidden" />
+
+                <div class="add-post-links">
+                  <a href="#"><img src="./images/live-video.png" alt="">Live Video</a>
+                  <a href="#"><img src="./images/photo.png" alt=""> <label for="file" class="btn">Photo/img</label></a>
+
+                  <a href="#"><img src="./images/feeling.png" alt="">Feeling Activity</a>
+                </div>
               </div>
-            </div>
-            <input id="files" style="visibility:hidden;" type="file" accept="image/png" @change=uploadImage>
+
+              <div>
+                <input type="file" style="visibility:hidden;" accept="image/png" id="file" name="file"
+                  multiple="multiple" />
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" @click="handlecreate()" data-bs-dismiss="modal"
+                  class="btn btn-primary">Understood</button>
+              </div>
+            </form>
+
           </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="button" @click="gotocreate()" class="btn btn-primary">Understood</button>
-          </div>
+
         </div>
       </div>
     </div>
@@ -170,12 +178,14 @@
 
         </div>
 
-        <div class="status-field-container write-post-container">
+
+        <!-- render all post -->
+        <div v-for="item in Post" class="status-field-container write-post-container">
           <div class="user-profile-box">
             <div class="user-profile">
               <img src="" alt="">
               <div>
-                <p> Alex Carry</p>
+                <p> {{ item.user.username }} </p>
                 <small>August 13 1999, 09.18 pm</small>
               </div>
             </div>
@@ -184,10 +194,40 @@
             </div>
           </div>
           <div class="status-field">
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Corporis dolores praesentium dicta
-              laborum nihil accusantium odit laboriosam, sed sit autem! <a href="#">#This_Post_is_Better!!!!</a> </p>
-            <img src="./images/feed-image-1.png" alt="">
+            <p>{{ item.title }} </p>
+            <!-- <div v-for="(img, index) in item.content"> -->
 
+            <!-- <div>../../../server/uploads/{{ img }}</div>
+              <img v-bind:src='getphoto()' class="d-block w-100" alt="...">
+              <img :src="'../../../server/uploads/' + getphoto().toString()" /> -->
+
+            <!-- 
+              <img v-bind:src='"../../../server/uploads/" + getphoto()' class="d-block w-100" alt="..."> -->
+            <!-- <div v-bind:id="img" v-if="index == 0">{{ img }} -{{ index }}</div>
+              <div v-bind:id="img" v-if="index != 0">{{ img }} -{{ index }}</div> -->
+            <!-- </div> -->
+            <div v-bind:id="'carousel' + item._id.substring(20)" class="carousel slide" data-bs-ride="carousel">
+              <div class="carousel-inner">
+                <div class="carousel-item active">
+                  <img v-bind:src='"../../../server/uploads/b3375f05d7577f11cff8df300.png"' class="d-block w-100"
+                    alt="...">
+                </div>
+                <div class="carousel-item ">
+                  <img v-bind:src='"../../../server/uploads/b3375f05d7577f11cff8df300.png"' class="d-block w-100"
+                    alt="...">
+                </div>
+              </div>
+              <button class="carousel-control-prev" type="button"
+                v-bind:data-bs-target="'#carousel' + item._id.substring(20)" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+              </button>
+              <button class="carousel-control-next" type="button"
+                v-bind:data-bs-target="'#carousel' + item._id.substring(20)" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+              </button>
+            </div>
           </div>
           <div class="post-reaction">
             <div class="activity-icons">
@@ -200,7 +240,7 @@
             </div>
           </div>
         </div>
-
+        <!-- end render -->
         <button type="button" class="btn-LoadMore" onclick="LoadMoreToggle()">Load More</button>
       </div>
 
@@ -268,6 +308,7 @@
         </div>
       </div>
     </div>
+
     <footer id="footer">
       <p>&copy; Copyright 2021 - Socialbook All Rights Reserved</p>
     </footer>
@@ -280,25 +321,59 @@
   display: flex;
 }
 </style>
-<script>
+<script >
+import axios from 'axios'
 export default {
   name: 'imageUpload',
-
   data() {
     return {
       username: localStorage.getItem("username"),
-      previewImage: null
+      previewImage: null,
+      Post: []
     }
   },
+
   mounted() {
+    document.getElementById("userid").value = localStorage.getItem("userid");
     window.addEventListener("load", this.getallPost);
+    console.log("username", this.getallPost)
   },
   methods: {
+    getphoto() {
+      return "b3375f05d7577f11cff8df300.png".toString();
+    },
+    async handlecreate() {
+      console.log("form", document.getElementById('form'))
+      var bodyFormData = new FormData(document.getElementById('form'));
+
+      axios({
+        method: "post",
+        url: "http://localhost:6969/post",
+        // headers: {
+        //   Accept: "application/json",
+        //   "Content-Type": "application/json",
+        //   "Authorization": `Bearer ${localStorage.getItem("token")}`
+        // },
+        data: bodyFormData,
+        headers: { "Content-Type": "multipart/form-data" },
+      })
+        .then(function (response) {
+          console.log(response);
+        })
+        .catch(function (response) {
+          //handle error
+          console.log(response);
+        });
+    },
+    async createPost() {
+      await handlecreate(document.getElementById('form'))
+    },
     logout() {
       localStorage.clear()
       return window.location.href = "http://localhost:8080/login";
     },
     async getallPost() {
+      console.log("hello")
       try {
         const config = {
           method: "GET",
@@ -313,7 +388,9 @@ export default {
             config
           );
           const data = await fetchResponse.json();
-          console.log("data", data)
+
+          this.Post = data.AllPost;
+          console.log("data", this.Post)
         } catch (e) {
           return e;
         }
@@ -321,42 +398,7 @@ export default {
         console.log(error);
       }
     },
-    async gotocreate() {
-      const array = [];
-      array.push(document.getElementById('imgvalue').src);
-      const req = {
-        title: contenttitle.value,
-        content: [1, 2, 3]
-      }
-      try {
-        const config = {
-          method: "POST",
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${localStorage.getItem("token")}`
-          },
-          body: JSON.stringify(req),
-        };
-        try {
-          const fetchResponse = await fetch(
-            `http://localhost:6969/post/`,
-            config
-          );
-          const data = await fetchResponse.json();
-          console.log("data", data)
-          // if(data.success){
-          //    return window.location.href = "http://localhost:8080/home";
-          // }else {
-          //     return alert(`${data.message}`)
-          // }
-        } catch (e) {
-          return e;
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    },
+
     uploadImage(e) {
       const image = e.target.files[0];
       const reader = new FileReader();
@@ -367,6 +409,8 @@ export default {
       };
 
     },
+
+
 
   },
 }
