@@ -14,7 +14,7 @@ POST http://localhost:6969/user/login
 Content-Type: application/json
 
 {
-    "username":"luan 123",
+    "username":"luan123",
     "password":"123"
 }
 //
@@ -22,7 +22,7 @@ Content-Type: application/json
 ###
 POST http://localhost:6969/post/
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyRXhpc3QiOiI2MzhkN2VlZTBhMmRlMjE5NzEwYWZlYzkiLCJpYXQiOjE2NzA5OTI0OTl9.ifog5ln6GYN0k1AbtEMCHlWIGpI7DEct3L-bwKqe19o
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyRXhpc3QiOiI2Mzk5ODM0NmZlYmRhZDA5OTQ5NTc3MTkiLCJpYXQiOjE2NzIzODI3MjV9.6j56SXu1arhcW4BJb9BZ7Wz7unQ6lUHYiYVM7OdlB0w
 
 {
     "title":"hom nay di net",
