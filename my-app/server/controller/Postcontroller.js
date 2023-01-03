@@ -18,11 +18,11 @@ class PostController {
           user: req.UserExit,
         });
         await newpost.save();
-        return res.status(200).json({
-          success: true,
-          message: "Add post success",
-          newpost: newpost,
-        });
+      return res.status(200).json({
+        success: true,
+        message: "Add post success",
+        newpost: newpost,
+      });
       }
     } catch (error) {
       console.log(error);
