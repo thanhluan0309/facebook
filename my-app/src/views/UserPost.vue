@@ -5,32 +5,6 @@
       aria-labelledby="staticBackdropLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
-          <!-- <div class="write-post-container">
-            <div class="user-profile">
-              <img src="./images/upload.png" alt="">
-              <div>
-                <p> Alex Carry</p>
-                <small>Create post <i class="fas fa-caret-down"></i></small>
-              </div>
-            </div>
-            <div class="post-upload-textarea">
-              <textarea name="" placeholder="What's on your mind," id="contenttitle" cols="30" rows="3"></textarea>
-              <div>
-                <img id="imgvalue" style="max-height: 100px" v-bind:src="previewImage" />
-              </div>
-              <div class="add-post-links">
-                <a href="#"><img src="./images/live-video.png" alt="">Live Video</a>
-                <a href="#"><img src="./images/photo.png" alt=""> <label for="files" class="btn">Photo/img</label></a>
-
-                <a href="#"><img src="./images/feeling.png" alt="">Feeling Activity</a>
-              </div>
-            </div>
-            <input id="files" style="visibility:hidden;" type="file" accept="image/png" @change=uploadImage>
-          </div> -->
-          <!-- <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="button" @click="gotocreate()" class="btn btn-primary">Understood</button>
-          </div> -->
         </div>
       </div>
     </div>
@@ -253,39 +227,6 @@
    </div>
 
 </template>
-<!-- <div class="status-field-container write-post-container" v-for="(item, index) in posts">
-   <div class="user-profile-box">
-      <div class="user-profile">
-         <img src="" alt="">
-         <div>
-            <p>{{ item.user.username }}</p>
-            <small>August 13 1999, 09.18 pm</small>
-         </div>
-      </div>
-      <div>
-         <a href="#"><i class="fas fa-ellipsis-v"></i></a>
-      </div>
-   </div>
-   <div class="status-field">
-      <p>{{ item.title }} </p>
-      <img src="./images/feed-image-1.png" alt="">
-       <div  v-for="(content, index) in item.content" :key="index" > 
-   <a>{{ content }}</a>
-</div> 
-
-   </div>
-   <div class="post-reaction">
-      <div class="activity-icons">
-         <div><img src="./images/like-blue.png" alt="">120</div>
-         <div><img src="./images/comments.png" alt="">52</div>
-         <div><img src="./images/share.png" alt="">35</div>
-      </div>
-      <div class="post-profile-picture">
-         <img src=" " alt=""> <i class=" fas fa-caret-down"></i>
-      </div>
-   </div>
-   <hr />
-</div> -->
 
 <script lang="ts">
 import Vue from "vue";
@@ -311,7 +252,6 @@ export default {
       }
    },
    mounted() {
-      // localStorage.setItem('userpost', JSON.stringify('63998346febdad0994957719'))
       var user = localStorage.getItem('userid');
       console.log(user);
       Vue.axios
