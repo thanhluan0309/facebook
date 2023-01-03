@@ -1,7 +1,7 @@
 
 <template>
   <div class="home">
-    <img id="imgvalueset" src="compman.gif" />
+
     <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
       aria-labelledby="staticBackdropLabel" aria-hidden="true">
       <div class="modal-dialog">
@@ -14,24 +14,33 @@
                 <small>Create post <i class="fas fa-caret-down"></i></small>
               </div>
             </div>
-            <div class="post-upload-textarea">
-              <textarea name="" placeholder="What's on your mind," id="contenttitle" cols="30" rows="3"></textarea>
-              <div>
-                <img id="imgvalue" style="max-height: 100px" v-bind:src="previewImage" />
-              </div>
-              <div class="add-post-links">
-                <a href="#"><img src="./images/live-video.png" alt="">Live Video</a>
-                <a href="#"><img src="./images/photo.png" alt=""> <label for="files" class="btn">Photo/img</label></a>
 
-                <a href="#"><img src="./images/feeling.png" alt="">Feeling Activity</a>
+            <form enctype="multipart/form-data" id="form">
+              <div class="post-upload-textarea">
+                <input id="title" type="text" name="title" />
+                <input id="userid" name="userid" type="hidden" />
+
+                <div class="add-post-links">
+                  <a href="#"><img src="./images/live-video.png" alt="">Live Video</a>
+                  <a href="#"><img src="./images/photo.png" alt=""> <label for="file" class="btn">Photo/img</label></a>
+
+                  <a href="#"><img src="./images/feeling.png" alt="">Feeling Activity</a>
+                </div>
               </div>
-            </div>
-            <input id="files" style="visibility:hidden;" type="file" accept="image/png" @change=uploadImage>
+
+              <div>
+                <input type="file" style="visibility:hidden;" accept="image/png" id="file" name="file"
+                  multiple="multiple" />
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" @click="handlecreate()" data-bs-dismiss="modal"
+                  class="btn btn-primary">Understood</button>
+              </div>
+            </form>
+
           </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="button" @click="gotocreate()" class="btn btn-primary">Understood</button>
-          </div>
+
         </div>
       </div>
     </div>
@@ -58,7 +67,7 @@
             <li @click="logout()" class="dropdown-item">logout</li>
             <li @click="userLike()" class="dropdown-item">User's Like post</li>
             <li @click="userPost()" class="dropdown-item">Posts of User</li>
-            <router-link to="" ></router-link>
+            <router-link to=""></router-link>
           </ul>
         </div>
       </div>
@@ -172,12 +181,14 @@
 
         </div>
 
-        <div class="status-field-container write-post-container">
+
+        <!-- render all post -->
+        <div v-for="item in Post" class="status-field-container write-post-container">
           <div class="user-profile-box">
             <div class="user-profile">
               <img src="" alt="">
               <div>
-                <p> Alex Carry</p>
+                <p> {{ item.user.username }} </p>
                 <small>August 13 1999, 09.18 pm</small>
               </div>
             </div>
@@ -186,15 +197,38 @@
             </div>
           </div>
           <div class="status-field">
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Corporis dolores praesentium dicta
-              laborum nihil accusantium odit laboriosam, sed sit autem! <a href="#">#This_Post_is_Better!!!!</a> </p>
-            <img src="./images/feed-image-1.png" alt="">
-
+            <p>{{ item.title }} </p>
+            <carousel loop="true" :navigationEnabled="true" :per-page="1" :navigate-to="someLocalProperty"
+              :mouse-drag="false">
+              <slide v-for="(img, index) in item.content" :key="index">
+                <img height="340px" v-bind:src="getImgUrl(img)" class="d-block w-100" alt="...">
+              </slide>
+            </carousel>
           </div>
           <div class="post-reaction">
             <div class="activity-icons">
-              <div><img src="./images/like-blue.png" alt="">120</div>
-              <div><img src="./images/comments.png" alt="">52</div>
+              <div class="emoji">
+                <div class="hello">
+                  <img src="./images/like1.png" alt="">Like
+                </div>
+                <div class="hello">
+                  <img src="./images/love.png" alt="">Love
+                </div>
+                <div class="hello">
+                  <img src="./images/laughing.png" alt="">Haha
+                </div>
+                <div class="hello">
+                  <img src="./images/sad.png" alt="">Sad
+                </div>
+                <div class="hello">
+                  <img src="./images/soaked.png" alt="">Wow
+                </div>
+                <div class="hello">
+                  <img src="./images/angry.png" alt="">Angry
+                </div>
+              </div>
+              <div class="like"><img src="./images/like-blue.png" alt="">120</div>
+              <div class="comment" @click="hello()" ><img src="./images/comments.png" alt="">52</div>
               <div><img src="./images/share.png" alt="">35</div>
             </div>
             <div class="post-profile-picture">
@@ -202,7 +236,7 @@
             </div>
           </div>
         </div>
-
+        <!-- end render -->
         <button type="button" class="btn-LoadMore" onclick="LoadMoreToggle()">Load More</button>
       </div>
 
@@ -283,33 +317,82 @@
   display: flex;
 }
 </style>
-<script >
+<script  >
+import { Carousel, Slide } from 'vue-carousel';
+import axios from 'axios'
 import UserLike from './UserLiked.vue';
 import UserPost from './UserPost.vue';
 export default {
   name: 'imageUpload',
-
   data() {
     return {
+      num0: 0,
       username: localStorage.getItem("username"),
-      previewImage: null
+      previewImage: null,
+      Post: []
+    }
+  },
+  components: {
+    Carousel,
+    Slide
+  },
+  computed: {
+    photo() {
+      return '../../../server/uploads/b3375f05d7577f11cff8df300.png';
     }
   },
   mounted() {
+    document.getElementById("userid").value = localStorage.getItem("userid");
+
     window.addEventListener("load", this.getallPost);
+
   },
   methods: {
+    hello(){
+      
+      console.log("hello")
+    },
+    getImgUrl(pic) {
+      return require('../../../server/uploads/' + pic)
+    },
+    async handlecreate() {
+      var bodyFormData = new FormData(document.getElementById('form'));
+
+      axios({
+        method: "post",
+        url: "http://localhost:6969/post",
+        // headers: {
+        //   Accept: "application/json",
+        //   "Content-Type": "application/json",
+        //   "Authorization": `Bearer ${localStorage.getItem("token")}`
+        // },
+        data: bodyFormData,
+        headers: { "Content-Type": "multipart/form-data" },
+      })
+        .then(function (response) {
+          console.log(response);
+          this.getallPost();
+        })
+        .catch(function (response) {
+          //handle error
+          console.log(response);
+        });
+    },
+    async createPost() {
+      await handlecreate(document.getElementById('form'))
+    },
     logout() {
       localStorage.clear()
       return window.location.href = "http://localhost:8080/login";
     },
-    userLike(){
+    userLike() {
       return window.location.href = "http://localhost:8080/userLike";
     },
-    userPost(){
+    userPost() {
       return window.location.href = "http://localhost:8080/userPost";
     },
     async getallPost() {
+      console.log("hello")
       try {
         const config = {
           method: "GET",
@@ -324,7 +407,9 @@ export default {
             config
           );
           const data = await fetchResponse.json();
-          console.log("data", data)
+
+          this.Post = data.AllPost;
+          console.log("data", this.Post)
         } catch (e) {
           return e;
         }
@@ -332,42 +417,7 @@ export default {
         console.log(error);
       }
     },
-    async gotocreate() {
-      const array = [];
-      array.push(document.getElementById('imgvalue').src);
-      const req = {
-        title: contenttitle.value,
-        content: [1, 2, 3]
-      }
-      try {
-        const config = {
-          method: "POST",
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${localStorage.getItem("token")}`
-          },
-          body: JSON.stringify(req),
-        };
-        try {
-          const fetchResponse = await fetch(
-            `http://localhost:6969/post/`,
-            config
-          );
-          const data = await fetchResponse.json();
-          console.log("data", data)
-          // if(data.success){
-          //    return window.location.href = "http://localhost:8080/home";
-          // }else {
-          //     return alert(`${data.message}`)
-          // }
-        } catch (e) {
-          return e;
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    },
+
     uploadImage(e) {
       const image = e.target.files[0];
       const reader = new FileReader();
@@ -379,6 +429,8 @@ export default {
 
     },
 
+
+
   },
   components: {
     UserLike,
@@ -389,6 +441,45 @@ export default {
 </script>
 <style lang="css">
 @import './style.css';
+.emoji{
+  width: 580px;
+  height: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  border-radius: 50px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  transform: translateY(100px);
+  transition: all 0.4s;
+  position: relative;
+  opacity: 0;
+  z-index: -1;
+}
+.emoji img{
+  display: block;
+  width: 100%;
+  transition: all 0.4s;
+}
+.emoji img:hover{
+  transform: translateY(-10%) scale(1.2);
+  filter: drop-shadow(0 1px 5px);
+}
+.comment img:hover{
+  transform: translateY(-10%) scale(1.2);
+  filter: drop-shadow(0 1px 5px);
+}
+.like img:hover{
+  transform: translateY(-10%) scale(1.2);
+  filter: drop-shadow(0 1px 5px);
+}
+.activity-icons:hover .emoji{
+  transform: translateY(0);
+  visibility: visible;
+  opacity: 1;
+  z-index: 1;
+}
 </style>
 <!-- 
 <script>

@@ -2,12 +2,14 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import HomeView from "../views/HomeView.vue";
 import TestView from "../views/testView.vue";
-import Registerview from "../views/register.vue"
+import Registerview from "../views/register.vue";
 import LoginView from "../views/login.vue";
+
+import VueCarousel from "vue-carousel";
 import UserLike from "../views/UserLiked.vue";
 import UserPost from "../views/UserPost.vue";
 Vue.use(VueRouter);
-
+Vue.use(VueCarousel);
 const routes = [
   {
     path: "/home",

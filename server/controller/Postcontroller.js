@@ -1,5 +1,8 @@
 const behavior = require("../model/behavior");
 const Post = require("../model/post");
+const mongoose = require("mongoose");
+
+const formidable = require("formidable");
 class PostController {
  async getPostByUser(req, res){
     try {
@@ -14,48 +17,66 @@ class PostController {
     }
  }
   async addPost(req, res) {
+    const newbehaviors = behavior({});
+    await newbehaviors.save();
     try {
-      const { title, content } = req.body;
-      if (!title) {
-        return res
-          .status(500)
-          .json({ success: false, message: "Tiêu đề không được bỏ trống !!" });
-      } else if (!content) {
-        return res
-          .status(500)
-          .json({ success: false, message: "Nội dung không được bỏ trống !!" });
-      }
-      const newpost = Post({
-        title: title,
-        content: content,
-        user: req.UserExit,
+      const form = formidable({
+        multiples: true,
+        uploadDir: "./uploads",
+        maxFileSize: 20 * 1024 * 1024,
+        keepExtensions: true,
       });
-      await newpost.save();
-      const newBehavior = behavior({
-        post: newpost._id
-      });
-      await newBehavior.save();
+      let formcreateNote = {
+        title: "",
+        content: [],
+        user: mongoose.Schema.Types.ObjectId,
+      };
+      form.parse(req, async (err, fields, files) => {
+        if (err) {
+          console.log(err);
+          return;
+        }
+        let filename = [];
+        var array = files["file"];
 
-      return res.status(200).json({
-        success: true,
-        message: "Add post success",
-        newpost: newpost,
+        formcreateNote.title = fields.title;
+        if (array.length !== undefined) {
+          array.forEach((element) => {
+            filename.push(element.newFilename);
+          });
+          formcreateNote.content = filename;
+        } else {
+          formcreateNote.content = files["file"].newFilename;
+        }
+        formcreateNote.user = fields.userid;
+        const newNote = await Post(formcreateNote);
+        await newNote.save();
+
+        const newbehaviors = behavior({
+          post: newNote._id,
+          like: [],
+          comment: [],
+        });
+        await newbehaviors.save();
+        return res
+          .status(200)
+          .json({ success: true, newNote: files, fields: fields });
       });
     } catch (error) {
       console.log(error);
     }
   }
-    async getAllPost(req, res) {
-      try {
-        const PostPublic = await Post.find();
-        return res.status(200).json({
-          success: true,
-          AllPost: PostPublic,
-        });
-      } catch (error) {
-        console.log(error);
-      }
+  async getAllPost(req, res) {
+    try {
+      const PostPublic = await Post.find().populate("user");
+      return res.status(200).json({
+        success: true,
+        AllPost: PostPublic,
+      });
+    } catch (error) {
+      console.log(error);
     }
+  }
   async getOnescheduleBY_id(req, res) {
     try {
       const schedulePublic = await Schedule.findOne({ _id: req.params.id });
