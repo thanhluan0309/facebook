@@ -132,11 +132,8 @@
                 <small>August 13 1999, 09.18 pm</small>
               </div>
               <div class="right-sidebar">
-                <b-dropdown split split-variant="outline-primary" variant="primary" text="Action"
-                  class="m-2">
-                  <b-dropdown-item href="#" onclick="update(item.id)">Update</b-dropdown-item>
-                  <b-dropdown-item href="#" onclick="deletepost(item.id)">Delete</b-dropdown-item>
-                </b-dropdown>
+                <button class="btn btn-primary" @click="update(item._id)">Edit</button>
+                <button class="btn btn-danger" @click="deletepost(item._id)">Delete</button>
               </div>
             </div>
             <div>
@@ -146,8 +143,8 @@
           <div class="status-field">
             <p>{{ item.title }} </p>
             <carousel loop="true" :navigationEnabled="true" :per-page="1" :mouse-drag="false">
-              <slide v-for="(img, index) in item.content">
-                <img height="340px" v-bind:src="getImgUrl(img)" class="d-block w-100" alt="...">
+              <slide v-for="(img, index) in item.content" :key="index">
+                <img height="340px" :src="'./../../server/uploads/'+img" class="d-block w-100" alt="...">
               </slide>
             </carousel>
 
@@ -250,11 +247,6 @@ export default {
       username: localStorage.getItem("username")
     };
   },
-  computed:{
-    getImgUrl:function(pic) {
-      return require('../../../server/uploads/' + pic);
-    },
-  },
   mounted() {
     var user = localStorage.getItem('userid');
     console.log(user);
@@ -266,18 +258,18 @@ export default {
       });
   },
   methods: {
-    getImgUrl:function(pic) {
+    getImgUrl(pic) {
+      console.log(require('../../../server/uploads/' + pic));
       return require('../../../server/uploads/' + pic);
     },
     async update(postID) {
-
     },
-    deletepost(postID) {
-      Vue.axios.delete("http://localhost:6969/post/delete/"+postID)
-      .then((res) => {
-        alert("Do you want to delete this "+ postID);
-        this.refreshPosts();
-      })
+    async deletepost(postID) {
+      Vue.axios.delete("http://localhost:6969/post/delete/" + postID)
+        .then((res) => {
+          alert("Do you want to delete this " + postID);
+          this.refreshPosts();
+        })
     },
     logout() {
       localStorage.clear()
