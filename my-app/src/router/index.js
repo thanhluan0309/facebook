@@ -8,6 +8,7 @@ import LoginView from "../views/login.vue";
 import VueCarousel from "vue-carousel";
 import UserLike from "../views/UserLiked.vue";
 import UserPost from "../views/UserPost.vue";
+import UpdatePost from "../views/UpdatePost.vue";
 Vue.use(VueRouter);
 Vue.use(VueCarousel);
 const routes = [
@@ -49,6 +50,11 @@ const routes = [
     path:"/userPost",
     name: "userpost",
     component: UserPost
+  },
+  {
+    path:"/updatePost/:id",
+    name:"updatePost",
+    component:UpdatePost
   }
 ];
 

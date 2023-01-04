@@ -263,7 +263,8 @@ export default {
       console.log(require('../../../server/uploads/' + pic));
       return require('../../../server/uploads/' + pic);
     },
-    async update(postID) {
+    update(id) {
+      return window.location.href = "http://localhost:8080/updatePost/"+id;
     },
     async deletepost(id) {
       Vue.axios.delete("http://localhost:6969/post/delete/" + id)
