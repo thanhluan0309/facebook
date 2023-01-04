@@ -91,7 +91,7 @@ class PostController {
   }
   async updatePost(req, res){
     let postid = req.params.id;
-    console.log(postid);
+
     let updateData = {
       title: req.body.title,
       content: req.body.content

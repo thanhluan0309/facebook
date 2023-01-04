@@ -1,6 +1,6 @@
 <template>
-   <div id="userpost">
-      <!-- <img id="imgvalueset" src="compman.gif" /> -->
+  <div id="userpost">
+    <!-- <img id="imgvalueset" src="compman.gif" /> -->
     <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
       aria-labelledby="staticBackdropLabel" aria-hidden="true">
       <div class="modal-dialog">
@@ -31,7 +31,7 @@
             <!-- <li @click="logout()" class="dropdown-item">logout</li>
             <li @click="userLike()" class="dropdown-item">User's Like post</li>
             <li @click="userPost()" class="dropdown-item">Posts of User</li> -->
-            <router-link to="" ></router-link>
+            <router-link to=""></router-link>
           </ul>
         </div>
       </div>
@@ -123,13 +123,20 @@
 
         </div>
 
-        <div class="status-field-container write-post-container" v-for="(item, index) in posts">
+        <div class="status-field-container write-post-container" v-for="(item, index) in posts" :key="index">
           <div class="user-profile-box">
             <div class="user-profile">
-              <img v-bind:src="img" alt="">
+              <img src="https://cdn-icons-png.flaticon.com/512/147/147142.png" alt="">
               <div>
                 <p> {{ item.user.username }}</p>
                 <small>August 13 1999, 09.18 pm</small>
+              </div>
+              <div class="right-sidebar">
+                <b-dropdown split split-variant="outline-primary" variant="primary" text="Action"
+                  class="m-2">
+                  <b-dropdown-item href="#" onclick="update(item.id)">Update</b-dropdown-item>
+                  <b-dropdown-item href="#" onclick="deletepost(item.id)">Delete</b-dropdown-item>
+                </b-dropdown>
               </div>
             </div>
             <div>
@@ -137,9 +144,13 @@
             </div>
           </div>
           <div class="status-field">
-            <p>{{item.title }} </p>
-            <img src="./images/feed-image-1.png" alt="">
-            
+            <p>{{ item.title }} </p>
+            <carousel loop="true" :navigationEnabled="true" :per-page="1" :mouse-drag="false">
+              <slide v-for="(img, index) in item.content">
+                <img height="340px" v-bind:src="getImgUrl(img)" class="d-block w-100" alt="...">
+              </slide>
+            </carousel>
+
           </div>
           <div class="post-reaction">
             <div class="activity-icons">
@@ -224,49 +235,67 @@
     <footer id="footer">
       <p>&copy; Copyright 2021 - Socialbook All Rights Reserved</p>
     </footer>
-   </div>
+  </div>
 
 </template>
 
 <script lang="ts">
 import Vue from "vue";
+import { any } from "webidl-conversions";
 export default {
-   name: "userpost",
-   data() {
-      return {
-         posts: undefined,
-         username: localStorage.getItem("username"),
-         img:'https://cdn-icons-png.flaticon.com/512/147/147142.png'
-      };
-   },
-   methods: {
-      logout() {
-         localStorage.clear()
-         return window.location.href = "http://localhost:8080/login";
-      },
-      userLike() {
-         return window.location.href = "http://localhost:8080/userLike";
-      },
-      userPost() {
-         return window.location.href = "http://localhost:8080/userPost";
-      }
-   },
-   mounted() {
-      var user = localStorage.getItem('userid');
-      console.log(user);
-      Vue.axios
-         .get("http://localhost:6969/post/user/" + user)
-         .then((res) => {
-            this.posts = res.data;
-            console.warn(res.data);
-         });
-   }
+  name: "userpost",
+  data() {
+    return {
+      posts: undefined,
+      username: localStorage.getItem("username")
+    };
+  },
+  computed:{
+    getImgUrl:function(pic) {
+      return require('../../../server/uploads/' + pic);
+    },
+  },
+  mounted() {
+    var user = localStorage.getItem('userid');
+    console.log(user);
+    Vue.axios
+      .get("http://localhost:6969/post/user/" + user)
+      .then((res) => {
+        this.posts = res.data;
+        console.warn(res.data);
+      });
+  },
+  methods: {
+    getImgUrl:function(pic) {
+      return require('../../../server/uploads/' + pic);
+    },
+    async update(postID) {
+
+    },
+    deletepost(postID) {
+      Vue.axios.delete("http://localhost:6969/post/delete/"+postID)
+      .then((res) => {
+        alert("Do you want to delete this "+ postID);
+        this.refreshPosts();
+      })
+    },
+    logout() {
+      localStorage.clear()
+      return window.location.href = "http://localhost:8080/login";
+    },
+    userLike() {
+      return window.location.href = "http://localhost:8080/userLike";
+    },
+    userPost() {
+      return window.location.href = "http://localhost:8080/userPost";
+    }
+  }
 };
 </script>
 
 <style lang="css">
 .uploading-image {
-   display: flex;
+  display: flex;
 }
 
 @import './style.css';
