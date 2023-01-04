@@ -60,16 +60,27 @@ class PostController {
   //       console.log(error);
   //     }
   //   }
-  async UpdateBy_Postid(req, res) {
+  async UpdateBy_id(req, res) {
     try {
       const { like, comment } = req.body;
+      const behaviorfind = await behaviors.findById({
+        _id: req.params.id,
+      });
+    
+      if (like) {
+        behaviorfind.like.push(like);
+      }
+      if (comment) {
+        behaviorfind.comment.push(comment);
+      }
+
       const newbehaviors = {
-        like: like,
-        comment: comment,
+        like: behaviorfind.like,
+        comment: behaviorfind.comment,
       };
       const updateBehavior = await behaviors.findOneAndUpdate(
         {
-          post: req.params.id,
+          _id: req.params.id,
         },
         newbehaviors,
         { new: true }
