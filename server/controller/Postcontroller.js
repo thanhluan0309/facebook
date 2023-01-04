@@ -88,6 +88,42 @@ class PostController {
       console.log(error);
     }
   }
+  async updatePost(req, res){
+    let postid = req.params.id;
+    let updateData = {
+      id: req.body.name,
+      title: req.body.title,
+      content: req.body.content
+    }
+
+    Post.findByIdAndUpdate(postid,{$set: updateData})
+    .then(()=>{
+      res.json({
+        message: 'Update successfully!'
+      })
+    })
+    .catch(error =>{
+      res.json({
+        message: 'Something wrong!'
+      })
+    })
+  }
+  async deletePost(req, res){
+    let postid = req.params.id;
+    Post.findByIdAndRemove(postid)
+    .then(()=>{
+      res.json({
+        message: 'Delete successfully!'
+      })
+    })
+    .catch(error =>{
+      res.json({
+        message: 'Something wrong!'
+      })
+    })
+  }
+  
+  
   //   async DeletedBY_id(req, res) {
   //     try {
   //       await Schedule.findOneAndDelete({

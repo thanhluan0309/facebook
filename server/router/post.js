@@ -7,4 +7,7 @@ router.get("/",post.getAllPost);
 router.get("/user/:id", post.getPostByUser );
 router.post("/", post.addPost);
 router.get("/", post.getAllPost);
+
+router.post("update/:id",post.updatePost);
+router.delete("delete/:id",post.deletePost)
 module.exports = router;

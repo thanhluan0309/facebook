@@ -227,9 +227,12 @@
                   <img src="./images/angry.png" alt="">Angry
                 </div>
               </div>
-              <div class="like"><img src="./images/like-blue.png" alt="">120</div>
-              <div class="comment" @click="hello()" ><img src="./images/comments.png" alt="">52</div>
+              <div class="like"><img src="./images/like.png" alt="">120</div>
+              <div class="comment" @click="loadComment(item._id)" ><img src="./images/comments.png" alt="">52</div>
               <div><img src="./images/share.png" alt="">35</div>
+            </div>
+            <div class="comment-section" v-for="(comment, index) in Behavior" >
+              <a>{{ comment._id }}</a>
             </div>
             <div class="post-profile-picture">
               <img src=" " alt=""> <i class=" fas fa-caret-down"></i>
@@ -329,7 +332,8 @@ export default {
       num0: 0,
       username: localStorage.getItem("username"),
       previewImage: null,
-      Post: []
+      Post: [],
+      Behavior:[]
     }
   },
   components: {
@@ -348,12 +352,28 @@ export default {
 
   },
   methods: {
-    hello(){
-      
-      console.log("hello")
-    },
     getImgUrl(pic) {
       return require('../../../server/uploads/' + pic)
+    },
+    async loadComment(postid) {
+      axios({
+        method: "get",
+        url: "http://localhost:6969/behavior/"+postid,
+        // headers: {
+        //   Accept: "application/json",
+        //   "Content-Type": "application/json",
+        //   "Authorization": `Bearer ${localStorage.getItem("token")}`
+        // },
+        headers: { "Content-Type": "multipart/form-data" },
+      })
+        .then(function (response) {
+          console.log(response);
+          this.Behavior =response;
+        })
+        .catch(function (response) {
+          //handle error
+          console.log(response);
+        });
     },
     async handlecreate() {
       var bodyFormData = new FormData(document.getElementById('form'));
