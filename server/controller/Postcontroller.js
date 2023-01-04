@@ -3,6 +3,7 @@ const Post = require("../model/post");
 const mongoose = require("mongoose");
 
 const formidable = require("formidable");
+const post = require("../model/post");
 class PostController {
  async getPostByUser(req, res){
     try {
@@ -77,12 +78,12 @@ class PostController {
       console.log(error);
     }
   }
-  async getOnescheduleBY_id(req, res) {
+  async getPostByID(req, res) {
     try {
-      const schedulePublic = await Schedule.findOne({ _id: req.params.id });
+      const schedulePublic = await Post.findOne({ _id: req.params.id });
       return res.status(200).json({
         success: true,
-        schedulepublic: schedulePublic,
+        post: schedulePublic,
       });
     } catch (error) {
       console.log(error);
@@ -90,8 +91,8 @@ class PostController {
   }
   async updatePost(req, res){
     let postid = req.params.id;
+    console.log(postid);
     let updateData = {
-      id: req.body.name,
       title: req.body.title,
       content: req.body.content
     }
