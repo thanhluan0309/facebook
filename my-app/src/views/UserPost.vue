@@ -232,6 +232,7 @@
     <footer id="footer">
       <p>&copy; Copyright 2021 - Socialbook All Rights Reserved</p>
     </footer>
+    
   </div>
 
 </template>
@@ -264,12 +265,14 @@ export default {
     },
     async update(postID) {
     },
-    async deletepost(postID) {
-      Vue.axios.delete("http://localhost:6969/post/delete/" + postID)
+    async deletepost(id) {
+      Vue.axios.delete("http://localhost:6969/post/delete/" + id)
         .then((res) => {
-          alert("Do you want to delete this " + postID);
-          this.refreshPosts();
-        })
+          alert("Delete success");
+          this.result.splice(id, 1);
+          this.mounted;
+          console.log(this.result);
+        });
     },
     logout() {
       localStorage.clear()
