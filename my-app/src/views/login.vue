@@ -1,4 +1,3 @@
-
 <template>
     <div id="example" class="login">
         <div class="Alldisplay">
@@ -33,7 +32,6 @@
 <script src="./handleApi/loginBehavior.js"></script>
 <script>
 export default {
-
     methods: {
         gotocreate(){
             return window.location.href = "http://localhost:8080/register";
@@ -83,33 +81,27 @@ export default {
 body {
     height: 100%;
 }
-
 .login {
     display: flex;
     height: 500px;
     width: 100%;
 }
-
 .Alldisplay {
     margin: auto;
     display: flex;
     margin-right: 16%;
 }
-
 .left {
     width: 584px;
     margin-right: 116px;
     margin-top: 8%;
 }
-
 .left-title {
     font-size: 3.2rem;
     text-align: 20px;
     margin-left: 167px;
     color: #1877f2;
-
 }
-
 .left-body {
     width: 302px;
     padding: 0px 10px;
@@ -119,7 +111,6 @@ body {
     hyphens: auto;
     margin-left: 220px;
 }
-
 .right {
     background-color: #fff;
     border: none;
@@ -133,7 +124,6 @@ body {
     height: 350px;
     padding: 12px;
 }
-
 .right-body {
     margin-bottom: 5px;
     height: 52px;
@@ -141,7 +131,6 @@ body {
     border: antiquewhite 1px solid;
     padding: 14px;
 }
-
 .right-body_btnlogin {
     background-color: #1877f2;
     color: white;
@@ -149,11 +138,9 @@ body {
     font-weight: 600;
     cursor: pointer;
 }
-
 .right-body_btnlogin:hover {
     opacity: .8;
 }
-
 .right-body_btnCreate {
     width: 228px;
     margin: auto;
@@ -163,7 +150,6 @@ body {
     color: white;
     cursor: pointer;
 }
-
 .right-body_btnCreate:hover {
     opacity: .8;
 }

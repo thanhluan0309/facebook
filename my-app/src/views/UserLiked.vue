@@ -1,36 +1,10 @@
 <template>
-   <div id="like">
-            <!-- <img id="imgvalueset" src="compman.gif" /> -->
+  <div id="like">
+    <!-- <img id="imgvalueset" src="compman.gif" /> -->
     <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
       aria-labelledby="staticBackdropLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
-          <!-- <div class="write-post-container">
-            <div class="user-profile">
-              <img src="./images/upload.png" alt="">
-              <div>
-                <p> Alex Carry</p>
-                <small>Create post <i class="fas fa-caret-down"></i></small>
-              </div>
-            </div>
-            <div class="post-upload-textarea">
-              <textarea name="" placeholder="What's on your mind," id="contenttitle" cols="30" rows="3"></textarea>
-              <div>
-                <img id="imgvalue" style="max-height: 100px" v-bind:src="previewImage" />
-              </div>
-              <div class="add-post-links">
-                <a href="#"><img src="./images/live-video.png" alt="">Live Video</a>
-                <a href="#"><img src="./images/photo.png" alt=""> <label for="files" class="btn">Photo/img</label></a>
-
-                <a href="#"><img src="./images/feeling.png" alt="">Feeling Activity</a>
-              </div>
-            </div>
-            <input id="files" style="visibility:hidden;" type="file" accept="image/png" @change=uploadImage>
-          </div> -->
-          <!-- <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="button" @click="gotocreate()" class="btn btn-primary">Understood</button>
-          </div> -->
         </div>
       </div>
     </div>
@@ -54,10 +28,10 @@
             Setting
           </button>
           <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-            <!-- <li @click="logout()" class="dropdown-item">logout</li>
+            <li @click="logout()" class="dropdown-item">logout</li>
             <li @click="userLike()" class="dropdown-item">User's Like post</li>
-            <li @click="userPost()" class="dropdown-item">Posts of User</li> -->
-            <router-link to="" ></router-link>
+            <li @click="userPost()" class="dropdown-item">Posts of User</li>
+            <router-link to=""></router-link>
           </ul>
         </div>
       </div>
@@ -149,7 +123,7 @@
 
         </div>
 
-        <div class="status-field-container write-post-container"  v-for="(item, index) in behaviors">
+        <div class="status-field-container write-post-container" v-for="(item, index) in behaviors">
           <div class="user-profile-box">
             <div class="user-profile">
               <img v-bind:src="img" alt="">
@@ -163,9 +137,9 @@
             </div>
           </div>
           <div class="status-field">
-            <p>{{item.post.title }} </p>
+            <p>{{ item.post.title }} </p>
             <img src="./images/feed-image-1.png" alt="">
-            
+
           </div>
           <div class="post-reaction">
             <div class="activity-icons">
@@ -250,7 +224,7 @@
     <footer id="footer">
       <p>&copy; Copyright 2021 - Socialbook All Rights Reserved</p>
     </footer>
-      <!-- <div class="container" v-for="(item, index) in behaviors">
+    <!-- <div class="container" v-for="(item, index) in behaviors">
          <b-card class="title" v-bind:title="item.post.title" sub-title="This is post 's content" style="
           color: aliceblue;
           font-family: Times New Roman, Times, serif;
@@ -263,7 +237,7 @@
             <a href="#" class="card-link">Go to Post</a>
          </b-card>
       </div> -->
-   </div>
+  </div>
 </template>
 
 <script lang="ts">
@@ -271,31 +245,43 @@ import Vue from "vue";
 import axios from "axios";
 import VueAxios from "vue-axios";
 export default {
-   name: "like",
-   data() {
-      return {
-         behaviors: undefined,
-         username: localStorage.getItem("username"),
-         img:'https://cdn-icons-png.flaticon.com/512/147/147142.png'
-      };
-   },
-   mounted() {
-      // localStorage.setItem('user',JSON.stringify('639beef7ec3662744cd4bbb4'))
-      var user =localStorage.getItem('userid');
-      console.log(user);
-      Vue.axios
-         .get("http://localhost:6969/behavior/like/"+user)
-         .then((res) => {
-            this.behaviors = res.data;
-            console.warn(res.data);
-         });
-      }
+  name: "like",
+  data() {
+    return {
+      behaviors: undefined,
+      username: localStorage.getItem("username"),
+      img: 'https://cdn-icons-png.flaticon.com/512/147/147142.png'
+    };
+  },
+  mounted() {
+    // localStorage.setItem('user',JSON.stringify('639beef7ec3662744cd4bbb4'))
+    var user = localStorage.getItem('userid');
+    console.log(user);
+    Vue.axios
+      .get("http://localhost:6969/behavior/like/" + user)
+      .then((res) => {
+        this.behaviors = res.data;
+        console.warn(res.data);
+      });
+  },
+  methods: {
+    logout() {
+      localStorage.clear()
+      return window.location.href = "http://localhost:8080/login";
+    },
+    userLike() {
+      return window.location.href = "http://localhost:8080/userLike";
+    },
+    userPost() {
+      return window.location.href = "http://localhost:8080/userPost";
+    }
+  }
 };
 </script>
 
 <style>
 .container {
-   /* border-style: solid;
+  /* border-style: solid;
    border-color: #090979;
    box-shadow: 5px 5px #090979;
    margin: 10px;

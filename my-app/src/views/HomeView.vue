@@ -67,7 +67,6 @@
             <li @click="logout()" class="dropdown-item">logout</li>
             <li @click="userLike()" class="dropdown-item">User's Like post</li>
             <li @click="userPost()" class="dropdown-item">Posts of User</li>
-            <router-link to=""></router-link>
           </ul>
         </div>
       </div>
@@ -76,7 +75,7 @@
           <div class="user-profile">
             <img src="" alt="">
             <div>
-              <p> {{ username }}</p>
+              <p> Alex Carry</p>
               <a href="#">See your profile</a>
             </div>
           </div>
@@ -165,7 +164,7 @@
           <div class="user-profile">
             <img src="./images/upload.png" alt="">
             <div>
-              <p> {{ username }}</p>
+              <p> Alex Carry</p>
               <small>Public <i class="fas fa-caret-down"></i></small>
             </div>
           </div>
@@ -200,7 +199,7 @@
             <p>{{ item.title }} </p>
             <carousel loop="true" :navigationEnabled="true" :per-page="1" :navigate-to="someLocalProperty"
               :mouse-drag="false">
-              <slide v-for="(img, index) in item.content" :key="index">
+              <slide v-for="(img, index) in item.content">
                 <img height="340px" v-bind:src="getImgUrl(img)" class="d-block w-100" alt="...">
               </slide>
             </carousel>
@@ -208,9 +207,9 @@
           <div style="height: 52px;font-size: 1.3rem;" class="post-reaction">
             <div class="activity-icons">
               <popper trigger="clickToOpen" :options="{
-  placement: 'top',
-  modifiers: { offset: { offset: '0,10px' } }
-}">
+                placement: 'top',
+                modifiers: { offset: { offset: '0,10px' } }
+              }">
                 <ul class="popper">
                   <li><button v-on:click="handlelike(item._id.substring(19), 'like')"
                       class="cssbutton cssbackgroundiconlike"
@@ -241,8 +240,8 @@
                 <button class="cssbutton" slot="reference">
                   <div><img src="./images/like.png" alt=""><span v-bind:aria-valuetext="item.behaviors._id"
                       v-bind:id='"valuelike" + item._id.substring(19)'>{{
-    item.behaviors.like.length
-}}</span></div>
+                        item.behaviors.like.length
+                      }}</span></div>
                 </button>
               </popper>
               <div>
@@ -250,8 +249,8 @@
                   v-bind:data-bs-target='"#collapseExample" + item._id.substring(19)' aria-expanded="false"
                   aria-controls="collapseExample">
                   <div><img src="./images/comments.png" alt=""><span v-bind:id='"idcomment" + item._id.substring(19)'>{{
-    item.behaviors.comment.length
-}}</span></div>
+                    item.behaviors.comment.length
+                  }}</span></div>
                 </button>
               </div>
               <div><img src="./images/share.png" alt="">35</div>
@@ -259,17 +258,14 @@
                 v-bind:id='"collapseExample" + item._id.substring(19)'>
                 <ul v-bind:id='"valuecomment" + item._id.substring(19)' class="content card card-body">
                   <li v-for="comment in item.behaviors.comment" class="listcontent">{{ comment.user }} : {{
-    comment.CommentContent
-}}</li>
+                    comment.CommentContent
+                  }}</li>
                 </ul>
                 <div style="margin-top:10px">
                   <input v-bind:id='"noidung" + item._id.substring(19)' type="text" placeholder="Comment here" />
                   <button v-on:click="sendmessage(item._id.substring(19), item.behaviors._id)">Send</button>
                 </div>
               </div>
-            </div>
-            <div class="comment-section" v-for="(comment, index) in Behavior" >
-              <a>{{ comment._id }}</a>
             </div>
             <div class="post-profile-picture">
               <img src=" " alt=""> <i class=" fas fa-caret-down"></i>
@@ -393,14 +389,12 @@
   padding: 0px 26px;
 }
 </style>
-<script  >
+<script >
 import { Carousel, Slide } from 'vue-carousel';
 import Popper from 'vue-popperjs';
 import 'vue-popperjs/dist/vue-popper.css';
 
 import axios from 'axios'
-import UserLike from './UserLiked.vue';
-import UserPost from './UserPost.vue';
 export default {
   name: 'imageUpload',
   data() {
@@ -409,8 +403,7 @@ export default {
       userid: localStorage.getItem("userid"),
       username: localStorage.getItem("username"),
       previewImage: null,
-      Post: [],
-      Behavior:[]
+      Post: []
     }
   },
   components: {
@@ -430,26 +423,6 @@ export default {
   methods: {
     getImgUrl(pic) {
       return require('../../../server/uploads/' + pic)
-    },
-    async loadComment(postid) {
-      axios({
-        method: "get",
-        url: "http://localhost:6969/behavior/"+postid,
-        // headers: {
-        //   Accept: "application/json",
-        //   "Content-Type": "application/json",
-        //   "Authorization": `Bearer ${localStorage.getItem("token")}`
-        // },
-        headers: { "Content-Type": "multipart/form-data" },
-      })
-        .then(function (response) {
-          console.log(response);
-          this.Behavior =response;
-        })
-        .catch(function (response) {
-          //handle error
-          console.log(response);
-        });
     },
     async handlecreate() {
       var bodyFormData = new FormData(document.getElementById('form'));
@@ -550,12 +523,6 @@ export default {
       localStorage.clear()
       return window.location.href = "http://localhost:8080/login";
     },
-    userLike() {
-      return window.location.href = "http://localhost:8080/userLike";
-    },
-    userPost() {
-      return window.location.href = "http://localhost:8080/userPost";
-    },
     async getallPost() {
       console.log("hello")
       try {
@@ -582,7 +549,12 @@ export default {
         console.log(error);
       }
     },
-
+    userLike() {
+      return window.location.href = "http://localhost:8080/userLike";
+    },
+    userPost() {
+      return window.location.href = "http://localhost:8080/userPost";
+    },
     uploadImage(e) {
       const image = e.target.files[0];
       const reader = new FileReader();
@@ -597,54 +569,11 @@ export default {
 
 
   },
-  components: {
-    UserLike,
-    UserPost
-  }
 }
 
 </script>
 <style lang="css">
 @import './style.css';
-.emoji{
-  width: 580px;
-  height: 20px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: white;
-  border-radius: 50px;
-  margin-bottom: 10px;
-  cursor: pointer;
-  transform: translateY(100px);
-  transition: all 0.4s;
-  position: relative;
-  opacity: 0;
-  z-index: -1;
-}
-.emoji img{
-  display: block;
-  width: 100%;
-  transition: all 0.4s;
-}
-.emoji img:hover{
-  transform: translateY(-10%) scale(1.2);
-  filter: drop-shadow(0 1px 5px);
-}
-.comment img:hover{
-  transform: translateY(-10%) scale(1.2);
-  filter: drop-shadow(0 1px 5px);
-}
-.like img:hover{
-  transform: translateY(-10%) scale(1.2);
-  filter: drop-shadow(0 1px 5px);
-}
-.activity-icons:hover .emoji{
-  transform: translateY(0);
-  visibility: visible;
-  opacity: 1;
-  z-index: 1;
-}
 </style>
 <!-- 
 <script>

@@ -28,9 +28,9 @@
             Setting
           </button>
           <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-            <!-- <li @click="logout()" class="dropdown-item">logout</li>
+            <li @click="logout()" class="dropdown-item">logout</li>
             <li @click="userLike()" class="dropdown-item">User's Like post</li>
-            <li @click="userPost()" class="dropdown-item">Posts of User</li> -->
+            <li @click="userPost()" class="dropdown-item">Posts of User</li>
             <router-link to=""></router-link>
           </ul>
         </div>
