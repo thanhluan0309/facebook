@@ -75,7 +75,7 @@
           <div class="user-profile">
             <img src="" alt="">
             <div>
-              <p> Alex Carry</p>
+              <p> {{ username }}</p>
               <a href="#">See your profile</a>
             </div>
           </div>
@@ -164,7 +164,7 @@
           <div class="user-profile">
             <img src="./images/upload.png" alt="">
             <div>
-              <p> Alex Carry</p>
+              <p> {{ username }}</p>
               <small>Public <i class="fas fa-caret-down"></i></small>
             </div>
           </div>
