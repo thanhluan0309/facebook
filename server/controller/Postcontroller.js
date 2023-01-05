@@ -93,13 +93,7 @@ class PostController {
   }
   async getPostByID(req, res) {
     try {
-<<<<<<< HEAD
       const schedulePublic = await Post.findOne({ _id: req.params.id }).populate('user');
-=======
-      const schedulePublic = await Schedule.findOneAndUpdate({
-        _id: req.params.id,
-      });
->>>>>>> luan
       return res.status(200).json({
         success: true,
         post: schedulePublic,

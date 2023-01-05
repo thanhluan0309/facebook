@@ -207,30 +207,6 @@
           </div>
           <div style="height: 52px;font-size: 1.3rem;" class="post-reaction">
             <div class="activity-icons">
-<<<<<<< HEAD
-              <div class="emoji">
-                <div class="hello">
-                  <img src="./images/like1.png" alt="">Like
-                </div>
-                <div class="hello">
-                  <img src="./images/love.png" alt="">Love
-                </div>
-                <div class="hello">
-                  <img src="./images/laughing.png" alt="">Haha
-                </div>
-                <div class="hello">
-                  <img src="./images/sad.png" alt="">Sad
-                </div>
-                <div class="hello">
-                  <img src="./images/soaked.png" alt="">Wow
-                </div>
-                <div class="hello">
-                  <img src="./images/angry.png" alt="">Angry
-                </div>
-              </div>
-              <div class="like"><img src="./images/like.png" alt="">120</div>
-              <div class="comment" @click="loadComment(item._id)" ><img src="./images/comments.png" alt="">52</div>
-=======
               <popper trigger="clickToOpen" :options="{
   placement: 'top',
   modifiers: { offset: { offset: '0,10px' } }
@@ -278,7 +254,6 @@
 }}</span></div>
                 </button>
               </div>
->>>>>>> luan
               <div><img src="./images/share.png" alt="">35</div>
               <div style="flex-wrap: wrap;width: 500px;" class="collapse"
                 v-bind:id='"collapseExample" + item._id.substring(19)'>
