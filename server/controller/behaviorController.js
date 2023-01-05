@@ -47,6 +47,18 @@ class PostController {
       });
     }
   }
+  async getBehaviorByUser(req, res){
+    try { 
+      behaviors.find({
+          like:
+          {$elemMatch:{'userid': req.params.id}}
+       }).populate('post').then((result)=>{
+          res.send(result);
+       });
+    } catch (error) {
+       res.status(500).json(error);
+    }
+ }
   //   async DeletedBY_id(req, res) {
   //     try {
   //       await Schedule.findOneAndDelete({

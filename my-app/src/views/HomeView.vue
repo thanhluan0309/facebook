@@ -65,6 +65,8 @@
           </button>
           <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
             <li @click="logout()" class="dropdown-item">logout</li>
+            <li @click="userLike()" class="dropdown-item">User's Like post</li>
+            <li @click="userPost()" class="dropdown-item">Posts of User</li>
           </ul>
         </div>
       </div>
@@ -205,9 +207,9 @@
           <div style="height: 52px;font-size: 1.3rem;" class="post-reaction">
             <div class="activity-icons">
               <popper trigger="clickToOpen" :options="{
-  placement: 'top',
-  modifiers: { offset: { offset: '0,10px' } }
-}">
+                placement: 'top',
+                modifiers: { offset: { offset: '0,10px' } }
+              }">
                 <ul class="popper">
                   <li><button v-on:click="handlelike(item._id.substring(19), 'like')"
                       class="cssbutton cssbackgroundiconlike"
@@ -238,8 +240,8 @@
                 <button class="cssbutton" slot="reference">
                   <div><img src="./images/like.png" alt=""><span v-bind:aria-valuetext="item.behaviors._id"
                       v-bind:id='"valuelike" + item._id.substring(19)'>{{
-    item.behaviors.like.length
-}}</span></div>
+                        item.behaviors.like.length
+                      }}</span></div>
                 </button>
               </popper>
               <div>
@@ -247,8 +249,8 @@
                   v-bind:data-bs-target='"#collapseExample" + item._id.substring(19)' aria-expanded="false"
                   aria-controls="collapseExample">
                   <div><img src="./images/comments.png" alt=""><span v-bind:id='"idcomment" + item._id.substring(19)'>{{
-    item.behaviors.comment.length
-}}</span></div>
+                    item.behaviors.comment.length
+                  }}</span></div>
                 </button>
               </div>
               <div><img src="./images/share.png" alt="">35</div>
@@ -256,8 +258,8 @@
                 v-bind:id='"collapseExample" + item._id.substring(19)'>
                 <ul v-bind:id='"valuecomment" + item._id.substring(19)' class="content card card-body">
                   <li v-for="comment in item.behaviors.comment" class="listcontent">{{ comment.user }} : {{
-    comment.CommentContent
-}}</li>
+                    comment.CommentContent
+                  }}</li>
                 </ul>
                 <div style="margin-top:10px">
                   <input v-bind:id='"noidung" + item._id.substring(19)' type="text" placeholder="Comment here" />
@@ -520,6 +522,13 @@ export default {
     logout() {
       localStorage.clear()
       return window.location.href = "http://localhost:8080/login";
+    }
+    ,
+    userLike() {
+      return window.location.href = "http://localhost:8080/userLike";
+    },
+    userPost() {
+      return window.location.href = "http://localhost:8080/userPost";
     },
     async getallPost() {
       console.log("hello")

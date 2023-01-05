@@ -136,7 +136,6 @@ class PostController {
           user: req.params.id
        }).populate('user').then((result)=>{
           res.send(result);
-          console.log(req.params.id);
        });
     } catch (error) {
        res.status(500).json(error)

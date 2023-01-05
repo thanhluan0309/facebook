@@ -103,32 +103,14 @@
 
       <div class="content-area">
 
-        <div class="write-post-container">
-          <div class="user-profile">
-            <img src="./images/upload.png" alt="">
-            <div>
-              <p> Alex Carry</p>
-              <small>Public <i class="fas fa-caret-down"></i></small>
-            </div>
-          </div>
-          <div class="post-upload-textarea">
-            <textarea name="" data-bs-toggle="modal" data-bs-target="#staticBackdrop"
-              :placeholder="'What is your mind ' + username + ' ?'" id="" cols="30" rows="3"></textarea>
-            <div class="add-post-links">
-              <a href="#"><img src="./images/live-video.png" alt="">Live Video</a>
-              <a href="#"><img src="./images/photo.png" alt="">Photo/Video</a>
-              <a href="#"><img src="./images/feeling.png" alt="">Feeling Activity</a>
-            </div>
-          </div>
-
-        </div>
+     
 
         <div class="status-field-container write-post-container" v-for="(item, index) in behaviors">
           <div class="user-profile-box">
             <div class="user-profile">
               <img v-bind:src="img" alt="">
               <div>
-                <p> {{ item.user.username }}</p>
+                <p> {{username }}</p>
                 <small>August 13 1999, 09.18 pm</small>
               </div>
             </div>
@@ -138,8 +120,12 @@
           </div>
           <div class="status-field">
             <p>{{ item.post.title }} </p>
-            <img src="./images/feed-image-1.png" alt="">
-
+            <carousel loop="true" :navigationEnabled="true" :per-page="1" :navigate-to="someLocalProperty"
+                     :mouse-drag="false">
+                     <slide v-for="(img, index) in item.post.content">
+                        <img height="340px" v-bind:src="getImgUrl(img)" class="d-block w-100" alt="...">
+                     </slide>
+                  </carousel>
           </div>
           <div class="post-reaction">
             <div class="activity-icons">
@@ -244,27 +230,36 @@
 import Vue from "vue";
 import axios from "axios";
 import VueAxios from "vue-axios";
+import { Carousel, Slide } from 'vue-carousel';
 export default {
   name: "like",
   data() {
     return {
-      behaviors: undefined,
+      behaviors: null,
       username: localStorage.getItem("username"),
       img: 'https://cdn-icons-png.flaticon.com/512/147/147142.png'
     };
   },
+  components: {
+      Carousel,
+      Slide
+   },
   mounted() {
     // localStorage.setItem('user',JSON.stringify('639beef7ec3662744cd4bbb4'))
     var user = localStorage.getItem('userid');
     console.log(user);
-    Vue.axios
-      .get("http://localhost:6969/behavior/like/" + user)
+    axios.get("http://localhost:6969/behavior/like/" + user)
       .then((res) => {
         this.behaviors = res.data;
-        console.warn(res.data);
+        console.log(res.data);
+      }).catch((err)=>{
+        console.log(err);
       });
   },
   methods: {
+    getImgUrl(pic) {
+         return require('../../../server/uploads/' + pic)
+      },
     logout() {
       localStorage.clear()
       return window.location.href = "http://localhost:8080/login";
