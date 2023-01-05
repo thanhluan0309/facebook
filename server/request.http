@@ -50,32 +50,23 @@ GET http://localhost:6969/behavior/639beef7ec3662744cd4bbb2
 
 //update behavior by post id
 ###
-PUT http://localhost:6969/behavior/639beef7ec3662744cd4bbb2
+PUT http://localhost:6969/behavior/63b58c5c975850508383e98e
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyRXhpc3QiOiI2MzhkN2VlZTBhMmRlMjE5NzEwYWZlYzkiLCJpYXQiOjE2NzA5OTI0OTl9.ifog5ln6GYN0k1AbtEMCHlWIGpI7DEct3L-bwKqe19o
 
 {
-    "like":[
+    # "like":
+    #    {
+    #         "user":"63998346febdad0994957719",
+    #         "likeContent":"smil zze"
+    #    }
+    # ,
+    "comment":
        {
-            "user":"639beef7ec3662744cd4bbb4",
-            "likeContent":"smil zze"
-       }, {
-            "user":"639beef7ec3662744cd4bbb4",
-            "likeContent":"sad"
-       }
-    ],
-    "comment":[
-       {
-            "user":"639beef7ec3662744cd4bbb4",
+            "userid":"63998346febdad0994957719",
+            "user":"yea",
             "CommentContent":"haha"
-       }, {
-            "user":"639beef7ec3662744cd4bbb4",
-            "CommentContent":"huhu"
+
        }
-       , {
-            "user":"639beef7ec3662744cd4bbb4",
-            "CommentContent":"asdasdasd"
-       }
-    ]
+    
    
 }

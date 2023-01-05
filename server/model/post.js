@@ -9,6 +9,10 @@ const PostSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "users",
   },
+  behaviors: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "behaviors",
+  },
 });
 
 module.exports = mongoose.model("posts", PostSchema);
