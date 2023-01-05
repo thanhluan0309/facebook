@@ -131,10 +131,10 @@
                 <p> {{ item.user.username }}</p>
                 <small>August 13 1999, 09.18 pm</small>
               </div>
-              <div class="right-sidebar">
-                <button class="btn btn-primary" @click="update(item._id)">Edit</button>
+              <button class="btn btn-primary" @click="update(item._id)">Edit</button>
+              <form class="right-sidebar">
                 <button class="btn btn-danger" @click="deletepost(item._id)">Delete</button>
-              </div>
+              </form>
             </div>
             <div>
               <a href="#"><i class="fas fa-ellipsis-v"></i></a>
@@ -260,7 +260,6 @@ export default {
   },
   methods: {
     getImgUrl(pic) {
-      console.log(require('../../../server/uploads/' + pic));
       return require('../../../server/uploads/' + pic);
     },
     update(id) {

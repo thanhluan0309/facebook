@@ -80,7 +80,7 @@ class PostController {
   }
   async getPostByID(req, res) {
     try {
-      const schedulePublic = await Post.findOne({ _id: req.params.id });
+      const schedulePublic = await Post.findOne({ _id: req.params.id }).populate('user');
       return res.status(200).json({
         success: true,
         post: schedulePublic,
@@ -91,13 +91,7 @@ class PostController {
   }
   async updatePost(req, res){
     let postid = req.params.id;
-
-    let updateData = {
-      title: req.body.title,
-      content: req.body.content
-    }
-
-    Post.findByIdAndUpdate(postid,{$set: updateData})
+    Post.findByIdAndUpdate(postid,{$set: req.body})
     .then(()=>{
       res.json({
         message: 'Update successfully!'
