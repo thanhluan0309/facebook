@@ -18,8 +18,6 @@ class PostController {
     }
  }
   async addPost(req, res) {
-    const newbehaviors = behavior({});
-    await newbehaviors.save();
     try {
       const form = formidable({
         multiples: true,
@@ -58,10 +56,23 @@ class PostController {
           like: [],
           comment: [],
         });
+        const Postupdate = {
+          behaviors: newbehaviors._id,
+        };
         await newbehaviors.save();
-        return res
-          .status(200)
-          .json({ success: true, newNote: files, fields: fields });
+        const updatepost = await Post.findByIdAndUpdate(
+          {
+            _id: newNote._id,
+          },
+          Postupdate,
+          { new: true }
+        ).populate("behaviors");
+        return res.status(200).json({
+          success: true,
+          newNote: files,
+          fields: fields,
+          createpost: updatepost,
+        });
       });
     } catch (error) {
       console.log(error);
@@ -69,7 +80,9 @@ class PostController {
   }
   async getAllPost(req, res) {
     try {
-      const PostPublic = await Post.find().populate("user");
+      const PostPublic = await Post.find()
+        .populate("user")
+        .populate("behaviors");
       return res.status(200).json({
         success: true,
         AllPost: PostPublic,
@@ -80,7 +93,13 @@ class PostController {
   }
   async getPostByID(req, res) {
     try {
+<<<<<<< HEAD
       const schedulePublic = await Post.findOne({ _id: req.params.id }).populate('user');
+=======
+      const schedulePublic = await Schedule.findOneAndUpdate({
+        _id: req.params.id,
+      });
+>>>>>>> luan
       return res.status(200).json({
         success: true,
         post: schedulePublic,
@@ -132,33 +151,33 @@ class PostController {
   //       console.log(error);
   //     }
   //   }
-  //   async UpdateBy_id(req, res) {
-  //     try {
-  //       const { title, date, ispublic, content, ListUserAccess } = req.body;
-  //       const newSchedule = {
-  //         title: title,
-  //         content: content,
-  //         date: date,
-  //         ispublic: ispublic,
-  //         user: req.UserExit,
-  //         ListUserAccess: ListUserAccess,
-  //       };
-  //       const updateSchedule = await Schedule.findOneAndUpdate(
-  //         {
-  //           _id: req.params.id,
-  //         },
-  //         newSchedule,
-  //         { new: true }
-  //       );
-  //       await updateSchedule.save();
-  //       return res.status(200).json({
-  //         success: true,
-  //         message: "Cập nhật thành công",
-  //         newschedule: updateSchedule,
-  //       });
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   }
+    // async UpdateBy_id(req, res) {
+    //   try {
+    //     const { title, date, ispublic, content, ListUserAccess } = req.body;
+    //     const newSchedule = {
+    //       title: title,
+    //       content: content,
+    //       date: date,
+    //       ispublic: ispublic,
+    //       user: req.UserExit,
+    //       ListUserAccess: ListUserAccess,
+    //     };
+    //     const updateSchedule = await Schedule.findOneAndUpdate(
+    //       {
+    //         _id: req.params.id,
+    //       },
+    //       newSchedule,
+    //       { new: true }
+    //     );
+    //     await updateSchedule.save();
+    //     return res.status(200).json({
+    //       success: true,
+    //       message: "Cập nhật thành công",
+    //       newschedule: updateSchedule,
+    //     });
+    //   } catch (error) {
+    //     console.log(error);
+    //   }
+    // }
 }
 module.exports = new PostController();

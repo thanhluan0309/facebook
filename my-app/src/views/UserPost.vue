@@ -142,23 +142,14 @@
           </div>
           <div class="status-field">
             <p>{{ item.title }} </p>
-            <carousel loop="true" :navigationEnabled="true" :per-page="1" :mouse-drag="false">
+            <!-- <carousel loop="true" :navigationEnabled="true" :per-page="1" :mouse-drag="false">
               <slide v-for="(img, index) in item.content" :key="index">
                 <img height="340px" :src="'./../../server/uploads/'+img" class="d-block w-100" alt="...">
               </slide>
-            </carousel>
+            </carousel> -->
 
           </div>
-          <div class="post-reaction">
-            <div class="activity-icons">
-              <div><img src="./images/like-blue.png" alt="">120</div>
-              <div><img src="./images/comments.png" alt="">52</div>
-              <div><img src="./images/share.png" alt="">35</div>
-            </div>
-            <div class="post-profile-picture">
-              <img src=" " alt=""> <i class=" fas fa-caret-down"></i>
-            </div>
-          </div>
+         <hr />
         </div>
 
         <button type="button" class="btn-LoadMore" onclick="LoadMoreToggle()">Load More</button>
