@@ -65,6 +65,7 @@
           </button>
           <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
             <li @click="logout()" class="dropdown-item">logout</li>
+            <li @click="changepass()" class="dropdown-item">change password</li>
           </ul>
         </div>
       </div>
@@ -520,6 +521,10 @@ export default {
     logout() {
       localStorage.clear()
       return window.location.href = "http://localhost:8080/login";
+    },
+    changepass(){
+      
+      return window,location.href="http://localhost:8080/change"
     },
     async getallPost() {
       console.log("hello")

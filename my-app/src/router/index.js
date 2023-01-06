@@ -4,6 +4,7 @@ import HomeView from "../views/HomeView.vue";
 import TestView from "../views/testView.vue";
 import Registerview from "../views/register.vue";
 import LoginView from "../views/login.vue";
+import ChangpassView from "../views/changepass.vue"
 
 import VueCarousel from "vue-carousel";
 Vue.use(VueRouter);
@@ -13,6 +14,11 @@ const routes = [
     path: "/home",
     name: "home",
     component: HomeView,
+  },
+  {
+    path: "/change",
+    name: "change",
+    component: ChangpassView,
   },
   {
     path: "/test",
@@ -30,6 +36,7 @@ const routes = [
     name: "register",
     component: Registerview,
   },
+ 
   {
     path: "/about",
     name: "about",

@@ -67,6 +67,32 @@ const getAlluser = async (req, res) => {
     console.log(error);
   }
 };
+//changepass
+const changepass = async (req, res) => {
+  try {
+    const config = {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(req),
+    };
+    try {
+      const fetchResponse = await fetch(
+        `http://localhost:6969/user/change`,
+        config
+      );
+      const data = await fetchResponse.json();
+      console.log("data", data);
+      return data;
+    } catch (e) {
+      return e;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
 const testf = async (req, res) => {
   console.log("asd");
 };
