@@ -103,25 +103,7 @@
 
          <div class="content-area">
 
-            <div class="write-post-container">
-               <div class="user-profile">
-                  <img src="./images/upload.png" alt="">
-                  <div>
-                     <p> Alex Carry</p>
-                     <small>Public <i class="fas fa-caret-down"></i></small>
-                  </div>
-               </div>
-               <div class="post-upload-textarea">
-                  <textarea name="" data-bs-toggle="modal" data-bs-target="#staticBackdrop"
-                     :placeholder="'What is your mind ' + username + ' ?'" id="" cols="30" rows="3"></textarea>
-                  <div class="add-post-links">
-                     <a href="#"><img src="./images/live-video.png" alt="">Live Video</a>
-                     <a href="#"><img src="./images/photo.png" alt="">Photo/Video</a>
-                     <a href="#"><img src="./images/feeling.png" alt="">Feeling Activity</a>
-                  </div>
-               </div>
 
-            </div>
 
             <div class="status-field-container write-post-container" v-for="(item, index) in posts" :key="index">
                <div class="user-profile-box">
@@ -231,11 +213,9 @@
 
 </template>
 
-<script lang="ts">
-import Vue from "vue";
+<script>
 import { Carousel, Slide } from 'vue-carousel';
 import axios from 'axios';
-import { any } from "webidl-conversions";
 export default {
    name: "userpost",
    data() {

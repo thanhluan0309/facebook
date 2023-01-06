@@ -204,7 +204,7 @@
               </slide>
             </carousel>
           </div>
-          <div style="height: 52px;font-size: 1.3rem;" class="post-reaction">
+          <div style="font-size: 1.3rem;" class="post-reaction">
             <div class="activity-icons">
               <popper trigger="clickToOpen" :options="{
                 placement: 'top',
