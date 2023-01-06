@@ -91,6 +91,56 @@ class PostController {
       console.log(error);
     }
   }
+  async getPostByID(req, res) {
+    try {
+      const schedulePublic = await Post.findOne({ _id: req.params.id }).populate('user');
+      return res.status(200).json({
+        success: true,
+        post: schedulePublic,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  async updatePost(req, res){
+    let postid = req.params.id;
+    Post.findByIdAndUpdate(postid,{$set: req.body})
+    .then(()=>{
+      res.json({
+        message: 'Update successfully!'
+      })
+    })
+    .catch(error =>{
+      res.json({
+        message: 'Something wrong!'
+      })
+    })
+  }
+  async deletePost(req, res){
+    let postid = req.params.id;
+    Post.findByIdAndRemove(postid)
+    .then(()=>{
+      res.json({
+        message: 'Delete successfully!'
+      })
+    })
+    .catch(error =>{
+      res.json({
+        message: 'Something wrong!'
+      })
+    })
+  }
+  async getPostByUser(req, res){
+    try {
+       Post.find({
+          user: req.params.id
+       }).populate('user').then((result)=>{
+          res.send(result);
+       });
+    } catch (error) {
+       res.status(500).json(error)
+    }
+ }
   //   async DeletedBY_id(req, res) {
   //     try {
   //       await Schedule.findOneAndDelete({

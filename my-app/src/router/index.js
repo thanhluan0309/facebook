@@ -7,6 +7,9 @@ import LoginView from "../views/login.vue";
 import ChangpassView from "../views/changepass.vue"
 
 import VueCarousel from "vue-carousel";
+import UserLike from "../views/UserLiked.vue";
+import UserPost from "../views/UserPost.vue";
+import UpdatePost from "../views/UpdatePost.vue";
 Vue.use(VueRouter);
 Vue.use(VueCarousel);
 const routes = [
@@ -46,6 +49,21 @@ const routes = [
     component: () =>
       import(/* webpackChunkName: "about" */ "../views/AboutView.vue"),
   },
+  {
+    path:"/userLike",
+    name: "userlike",
+    component: UserLike
+  },
+  {
+    path:"/userPost",
+    name: "userpost",
+    component: UserPost
+  },
+  {
+    path:"/updatePost/:id",
+    name:"updatePost",
+    component:UpdatePost
+  }
 ];
 
 const router = new VueRouter({
